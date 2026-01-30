@@ -1,0 +1,155 @@
+Notes for Advanced Programming COMSW3157.
+Dumb Terminal: screen or a keyborad connected to a host machine.
+
+Now: everything is connected together so it can be text based.
+
+lubuntu
+
+Working with the shell:
+Kernel is the core of the operating system: Kernel exposes system calls that are functions that are program that executes in the Kernel.
+
+Library routines can do system calls, and etc.
+
+Shells will be making the system calls for us.
+We will make a shell at the end of the semester which will make specific system calls.
+
+Unix uses the file system hierarchical tree.
+/(root) goes to different children that have their own children.
+
+File paths:
+/bin: essential user binaries (executables) that must be present when the system is on single user mode. (SUM: almost like a safemode)
+
+/boot: the files related to system boot is contained here
+
+/dev: developer files that is useful for people to sue
+
+/home: contains all of the home directories of the users.
+
+/mnt: all file systems that can bemountd.
+
+/root: home directory of the user.
+
+/tmp: Applications store temporary files in the /tmp directory.
+
+/usr: contains all of the applications used by users.
+
+Commands/instructions:
+echo: command line utility we are running.
+pwd: prints working directory.
+
+ls: list directory contents
+(Linux is case sensitive)
+
+cd - : gets you to a previous folder
+
+od: octal dump to show the contents of files in octal and other formats
+od -c: will give you character by charactr content of all the contents
+
+whereis ____ : looks for ____ and then prints the directory
+
+whereis -b prints the directory
+
+whereis -m prints the directory and the program
+
+touch: creates a file
+
+touch -d "date" "name": metadata of the file is given.
+
+cp: copies a file
+
+mv: moves a file
+mv existing.file exisiting.file2 will remove all of the contents of the second file
+
+more
+less: shows you contents with detail or no detail
+
+head: shows the top 10 lines
+head -n(number): shows the top some number of lines
+
+tail: shows the bottom 10 lines
+tail -n(number): shows the bottom some number of lines
+
+rm: removes a file
+
+Two types of commands:
+ones that are in the shell (shell built-in commands)
+user commands
+
+Shell built-in strings that bash shells knows how to interpret.
+
+User commands: looks in the path, and tries to find the thing you are looking for and then runs it and then returns back to the prompt.
+
+user bin will contain all of the user commands.
+
+Shell variables: starts with "$"
+env: shows all of the shell variables
+
+.. for parent . for current - for previous
+
+cntrl+r : searching the history of the commands
+
+
+
+real time: how much time has elapsed for the user 
+user time: time of program to run that did not go into the kernel.
+sys time: time due to kernel instructions
+
+Job control in bash
+
+&: gives you a job to run in the background
+
+job: shows what job is running.
+
+fg: bring a program to the foreground
+fg %1: brings the first running job into the foreground.
+bg: bring a program to the background
+
+ps: gives you all of the list of processes running in the machine.
+ps -l: gives you all of the details of the processes
+
+StandardIO
+
+sort: a program that will sort the content of a text file
+uniq: removes duplicates
+
+man: shows man pages for instructions and commands within bash or C
+
+sections 1 2 and 3 are what we need
+
+binary calls printf to do some work.
+
+File system and bash:
+ls -l: shows you the number of blocks that have been used.
+the first character for such command can be a d,-,l,c,b, or something.
+
+first character within the permission string tells you the type
+the rest tells you the permissions
+Hard links: directories that are connected to a folder
+
+- for any given character means that you do not have permission
+
+different owners can see different things.
+the right: everyone
+the middle: group
+the left: others
+
+you can think of the permissions as binary bits.
+if the binary is 1, the permission exists.
+
+There can be 8 different ways to have a permission.
+
+chmod: change permission within a file
+
+chmod 744: will give a specific permission to a specific group.
+chmod rwxrwxrwx
+
+l: it is a link (first character of the permission string)
+
+#!/bin/bash <- MUST BE THE FIRST LINE OF BASH SCRIPTS
+shebang: #!
+
+comments begin with an #
+
+piping: standard out of the one process becomes the standard out of the next process.
+
+

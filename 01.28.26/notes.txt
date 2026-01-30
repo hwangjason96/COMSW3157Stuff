@@ -1,0 +1,153 @@
+Arrays
+
+Here Document
+If a bunch of lines of texts exist then using cat << could work
+ENDOFFILE
+
+basename: gives you the name of the file itself without the name of the folders without the directory
+
+file = "/home/user/shared/.../something.cpp"
+echo $(basename $file")
+
+..or...
+
+varname = $(basename "$file")
+will give you something.cpp instead of the entirety of the string ("$" makes it readable)
+
+subshell $(subshell) -> is the subshell
+
+Basic conditionals
+
+if [ ! -d "$dirname" ]; then #if directory doesnt exist
+	#do something
+fi
+
+if [ ! -f "$filename" ]; then #if file doesn't exist
+	#then do something
+fi
+
+if [$var -eq 1 ]; then #if variable's value equals 1
+	#do something
+fi
+
+-ne, -lt, -gt, le, -ge
+not eql, less than, greater than, less than or equal, greater than or equal
+string comparison: ==, !=
+
+syntax:
+
+a=5
+b=6
+total=$(( a+b ))
+echo $total
+
+index=0
+((++index)) #or
+((index++)) #or
+index=$((index+1)) #or
+((index=index+1)) #or
+((index+=1))
+echo $index
+
+Constants in bash
+
+prefix: readonly
+readnly a=3 #a will always be 3
+
+if you write
+a=4
+-bash: a: readonly variable
+
+b=3
+readonly b
+
+FUnctions
+
+myFunction() {
+echo "Hello World!"
+}
+
+parameters are positional, starting with $1
+myFunction() {
+local name=$1
+echo "Hello, $name!"
+}
+
+All variables are global.
+
+For functions, try to make the variables local.
+
+Working with Commandline arguments
+./myscript This is cool.
+
+$0 = ./myscript
+$1 = This
+$2 = is
+$3 = cool.
+
+getopts
+./parseargs.sh a.txt b.txt
+
+size_flag=0 #flags are booleans usually
+
+case esac
+do done
+
+put a leading colon to suppress error messages
+
+while getopts ":s" option; do
+case "$option" in
+s) size_flag=1
+;;
+?) printf "Error: Unknown option'-%s'.\n "OPTARG" >&2 #OPTARG is the flag that was raised
+#script failed
+exit
+;;
+
+Standard out =1 Standard in =0  Standard error = 2
+printf vs echo: printf and echo are different
+
+getopts
+tail.sh
+:n: because the colon after means there is a value that comes right after it
+
+
+Command line argument indexing
+./tail.sh -n 5 a.txt b.txt c.txt
+
+0 = ./tail.sh
+1 = -n
+2 = 5
+3 = a.txt
+4 = b.txt
+5 = c.txt
+OPTIND is the index of the next argumenton the command line.
+OPTIND will be 3 for the above example
+# shows the number of positional arguments
+
+shift "$((OPTIND-1))" #may be no quotes?
+
+Shifting can make looping easy
+
+for f in "$"; do
+	echo "$f"
+done
+
+Shellcheck is a static analysus tool for shell scripts for .sh files
+
+${#filenames[*]} -gt 0 #filenames array has more than 0 elements?
+
+Grading.sh
+
+Line 44 is the main
+unzip -o (overrides existing file if existent) 
+
+cut -d (d is delimiters): cut it at the delimeters -f (field -f3 field)
+<<<"$base" I want to cut the string that is inthe variable and feed it into the cut
+|: piping it. it will give you the standard out and out it to a file after the '|' symbol.
+
+/dev/null a garbage can that you can put everything into.
+
+
+arrayfun.sh
+
