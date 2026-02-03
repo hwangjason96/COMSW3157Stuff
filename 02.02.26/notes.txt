@@ -1,0 +1,143 @@
+Day 5
+
+Compiling and linking with Make
+
+Compiler: translates from one language to another
+Which means it can also mean that it is translating from C to Java
+Runs within a specific hardware
+x86 architecture or ARM architecture
+
+Compiling Benefits:
+1. Portability
+2. Speed
+3. Readability
+	Source code is easier for huans to read, maintain, and write
+4. Safety
+
+gcc GNU C Compiler
+
+FIrst C Program
+
+ObjDump: displays the assembly code for the program
+
+4 Stages of Compilation
+Preprocessing
+Compilation
+Assembly
+Linking
+
+#define makes a macro (makes a constant) (merely a text substitution)
+
+Preprocessing will affect us the most.
+
+Compiling multiple files:
+Many .c files -> many .o files -> one executable
+Each compilation unit should be compiled into a .o object file
+
+Main: main function that drives the program
+stdlib.h : return EXIT_SUCCESS is equivalent to return 0;
+"___.h" something we wrote ourselves in the current directory
+<____.h> something global that we didn't write
+
+function prototype:
+retType funcName(param1,param2);
+
+Header Files:
+#headerguards:
+
+#ifndef _ADD_H_ :if not defined then
+#define _ADD_H_
+
+int add(int x, int y);
+
+#endif
+
+Goal: minimally build the project
+add.c/add.h -> compile -> add.o
+sub.c/sub.h -> compile -> sub.o
+test.c      -> compile -> test.o
+add.o sub.o test.o -> link -> a.out
+
+Symbols and Linkers
+
+Symbol definitions are stored in an object file
+
+During the symbol resolution step, the linker associates each
+symbol reference with exactly one symbol definition.
+
+Reasons for linkers:
+
+1. Modularity
+2. Efficiency (Both time and space)
+
+Implicit function declarations
+Function must exist above the place it is called. (prototype or implementation)
+
+Convention for header guards: _NAME_H_ for name.h file
+
+make helps us build our project by typing just make
+
+Rule for make:
+left is the target
+target: name.c (dependency for the target)
+	gcc name.c -o target
+
+target: dependencies (or prerequisites)
+	commands
+
+make <-f makefile> target
+
+Dependencies are uilt in the order they are declared from left to right.
+
+-g
+produces debugging information
+
+-Wall
+Bother me for all errors
+
+-Werror
+Make all warnings into errors.
+Error: compilation stops && Warning: compilation continues
+
+-pendatic-errors
+Give an error whenever the base standard requires something.
+
+ASK FOR HELP if you find a compilation error
+
+Linker flags
+
+LDFLAGS
+(-lffo) added to the LDLIBS
+LDLIBS
+
+#################################################
+Single-source make file:
+CC = gcc
+C_FILE = $( wildcard *.c)
+TARGET = $( patsubst %.c,%,$(C_FILE))
+CFLAGS = -g -Wall -Werror -pedantic-errors
+LDFLAGS = <any linker flags>
+LDLIBS = <libraries to link in, commonly –lm, for the math library>
+.PHONY: all clean
+all:
+$(CC) $(CFLAGS) $(LDFLAGS) $(C_FILE) -o $(TARGET) $(LDLIBS)
+clean:
+rm -f $(TARGET) $(TARGET).exe
+##################################################
+
+any target that is not the name of the macros you should put it in .PHONY
+
+-o $@ ($@ name of the target)
+
+$<
+first item in the dependenies list (the first item in the target)
+
+-c
+compiles only
+
+if you are using the same make file from early on,
+you will make your executables in the wrong name.
+
+% will match the same thing across the room
+
+Capital M Make file.
