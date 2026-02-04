@@ -1,0 +1,109 @@
+Notes for 02/06/26
+
+C vs Java (C gives you more power)
+C is procedural, not objected-oriented (No methods nor fields)
+Code is built around functions (Function-oriented programming)
+Struct (Grouping of variables)
+
+Memory management in C is totally up to you.
+C: malloc and free (malloc = manual allocation of memory, free = free memory)
+
+Syntax:
+
+#include<stdio.h>
+
+int main(){
+
+        return 0; //Every statement ends with a ;
+}
+
+Wrong Syntax:
+#include<stdio.h>
+
+int main(){
+        return 0;
+        printf("Hello, World!\n"); //a simple print statement
+} 
+NOPE! There is no output
+
+primitive data types
+
+char, short, int, float, long, long long, double, float
+
+char <= short <= int <= long <= long long
+
+8 bits in a byte
+char: 1 byte, 
+short: 2 bytes, 
+int: 4 bytes, 
+float: 4 bytes, 
+long: 8 bytes, 
+long long: 8 bytes, 
+double: 8 bytes.
+
+signed vs unsigned variables:
+int x; [-2^31,2^(31)-1]
+
+ 1011
++1011
+-----
+10110 -> overflow
+
+2's comp:
+1. start with +5 in 8 bits: 0000101
+2. flip all the bits: 1111010
+3. add 1: 1111011 this is the 2's comp of 5, or -5.
+Leftmost bit being 1 means it is a negative number
+
+-1? as a signed char is 11111111
+
+Inverse:
+if you see a number: 11101111
+1. flip, add 1
+-00010001 = (-17)_10
+
+== or != (equality operators)
+<, >, <=, >= relational operators: 1 true or 0 false
+
+&& AND
+|| OR
+! NOT
+THESE ARE SHORT CIRCUIT OPERATORS
+
+& bitwise AND
+| bitwise OR
+~ bitwise NOT
+& bitwise XOR
+
+we can OR something to turn it on.
+we can AND something to turn it off.
+
+we can XOR to flip all of the bits
+
+<< bitwise left shift (multiplication by 2)
+>> bitwise right shift (int divison by 2)
+
+examples of numbers
+hexadecimal : 0x4b (0x is important)
+unsigned int: __u (u as a postfix)
+long: __l (l as a postfix)
+unsigned long (ul as a postfix)
+double: 314159e-5L (e-_L is there for the amount of decimals)
+flaot: __f (f as a postfix)
+char: '_' ('' as a pre and post fix)
+
+Part1 asks you to compute the gcd
+argc, argv[i]
+argc: how many arguments there are
+argv[i]: lets you access each one by index
+
+we don't really like atoi, but allowed for the latest hw.
+
+printf!
+
+scanf: 
+scanf("%d", &some_int);
+
+putc allows you to write 1 character to a file or an output stream.
+
+THe crazy way of swapping two numbers by doing 3 bitwise exclusive ors.
