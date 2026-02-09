@@ -1,0 +1,107 @@
+Coding style
+
+Linux Kernel coding style.
+
+One True Brace
+
+ex)
+bool is_negative(int x)
+{
+    if (x < 0) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+C Keywords:
+auto break case char const continue default do double else enum extern(?) ... volatile union typedef (all are ??
+
+Operator precednence
+
+1. (left to right)
+++ --
+() [] . -> (type){list}
+
+2. (right to left)
+++ --
+
+3.
+
+typeCasting:
+
+int -> unsigned int -> long -> unsigned long -> long long ...
+movements up the chart are promotions and movements down the chart are demotions
+
+promotions are guaranteed to preserve the variable value.
+
+demotions can result in overflow and can change the value.
+
+Enumerations:
+enum boolean {NO, YES} 0 is a no and 1 is a yes
+
+structs (almost like a class)
+syntax:
+struct my_struct {
+	int x;
+	int y;
+	int z;
+};
+
+unions: store different types of in the same memory location.
+
+union my_union {
+	int i;
+	short s;
+	char c;
+};
+
+A union allocates enough space to store largest of the members.
+
+Array
+Collection of data items, all of the same type.
+
+int a[10]; //type name[size]
+
+it can be multi dimensional
+int b[10][20]
+
+Initializing everything to 0 would be
+int array[100] = { 0 }; //implicitly initializes everything else to be 0
+
+####################
+Pointers (Variables that hold a memory address)
+
+Memory is like a long array of bytes
+
+A pointer stores the index of a byte (or the start of a block of bytes), known as the memory address.
+
+if we have a pointer named p, which points to address 5, we can
+REad the value at address 5 ( val = *p)
+Change the value (*p = new_val)
+change the pointer to point to a different address without changing the pointed memory (p = p + 1)
+
+The key to understanding pointers is to understand that pointers themselves are stored in memory somewhere, so we can have a pointer to a pointer!
+
+Pointers are data objects that store the momory address of another data object that is located in computer memory.
+
+Two major operator (*) dereference (&) reference operator or address-of operator
+
+Pointer Arithmetic:
+
+int a[7] = {0,1,2,3,4,5,6};
+int *pa;
+pa = a; OR pa = &a[0];
+
+
+int b;
+int *pb = pa + 2; //will point to 2 sizeof(int) much bits away from the first element
+b = *pb; OR b = a[2];
+
+Defining your own types
+
+typedef will make a datatype into a shorter version.
+typedef unsigned int uint; //will now make uint data types all unsigned ints.
+
+Variable scope (Local/Global/File Static/Block Static)
+
