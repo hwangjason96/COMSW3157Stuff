@@ -1,0 +1,55 @@
+struct padding and different stuff
+
+my_union u {
+int i;
+char c;
+short s;
+};
+
+look at byteprintf for the pointer arithmetic.
+
+int *end = array + num_elements - 1; //Pointer arithmetic always assumes that integers are a representation of how much bytes are being put.
+//so if I say something like int *p; p += 1; then the amount that would be added would be 4 bytes (as int is 4 bytes).
+
+When working with void*, you want them to be char pointers as it is 1 byte.
+
+Function Pointers:
+ 
+Align to the size of the data type to which you have.
+
+store each struct member at an offset that s a multiple of its size. (struct padding)
+
+1. The offset of each member must be a multiple of the member's size in bytes.
+
+2. The total size of the struct must be a multiple of its largest member's size in bytes.
+
+3. The order of members stays as it appears in the code.
+
+What is the size of this struct>
+
+struct padded_struct {
+char c1;
+int i1;
+char c2;
+int i2;
+int i3;
+long l;
+};
+
+Largest: Long.
+Therefore [0: C1|__________|4: i1] ... cont.
+
+arrays?
+treat each element as a single variable.
+
+Nested strcut:
+1. find the size of the inner struct
+2. align the nested struct member to the largest size of its largest type.
+3. pad
+
+Unions
+the size of the union is always the size of the largets datatype
+
+THE ORDER OF VARIABLE INITIALIZATION GREATLY AFFECTS THE PADDING
+
+struct my_struct {
