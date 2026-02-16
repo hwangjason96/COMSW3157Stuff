@@ -1,0 +1,71 @@
+Heap
+
+Free chunk of data storage that you must free and manually allocate.
+
+Stack: is managed automatically. Any variables and program arguments are taken care of by the stack.
+
+arrays are usually managed by the heap.
+
+malloc: memory allocate to the heap.
+malloc goes beyond the scope of any function, (it is global)
+
+Pretty much anything we do is small.
+
+free(): frees the dedicated memory from malloc.
+
+For all of the project we do in the course, the memory is small, so free might not be always necessary. However, you should absolutely do it for practice.
+
+Valgrind: is a command line tool that reports memory errors and leaks.
+
+just because the valgrind says leaks are not possible, doesn't mean there is no memory leak.
+Example: if the compilation of the C code has an error, valgrind won't check if there is an issue with the memory.
+
+Make and valgrind are separate, you can use a bash script, but might be a little more rigorous.
+
+valgrind --leak-check=full ./executable
+
+^^syntax
+
+REMEMBER THAT IT WILL RUN THE EXECUTABLE(MUST MAKE BEFORE CHECKING)
+
+
+Segmentation fault.
+when you try to go outside of the memory base of your process, your program defaults to segmentation fault.
+
+*s = "hi"; is readonly.
+
+strcpy(s,"j"); will give you a segmentation fault because s is readonly
+
+There is a whole section on readonly memory.
+
+
+A C executable contains 7
+memory sections. From low
+address to high address, they are:
+● text
+● read-only data
+● initialized data
+● uninitialized data
+● the heap (which grows
+upward)
+● the stack (which grows
+downward)
+● command line args and
+environment variable
+
+const variables are in the read-only data
+
+global and static variables are in the initialized data
+
+bss: block started by symbol
+
+Contains all global variables and
+static variables that are initialized to
+zero or do not have explicit
+initialization in source code
+
+argv is in the stack but higher portion of the stack.
+
+look at the lecture recording for more code
+
+
