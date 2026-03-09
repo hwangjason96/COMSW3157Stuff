@@ -1,0 +1,51 @@
+Reading Contents from Directory
+
+Statting Contents of a File
+(Getting statistical information or Metadata from a file)
+
+getting the size of a file:
+fseek to the end, and then do ftell to find out how big a file is.
+
+another way of doing it without opening the file is through stat.
+
+stat(), lstat(). they both returns a stat struct that is statistical data about the files.
+
+stat was a command line tool: stat -c%y 'filename' would give you the last modified date.
+
+stat struct,
+
+st_dev ID of device containing the file
+st_ino; Inode number
+st_mode
+st_uid
+st_gid
+st_...
+
+stat(char *path, struct stat *buf);
+buf is the buffer that is blank coming in and will contain the metadata at the end.
+
+lstat is almost identitical, except with a symmlink.
+
+struct stat lfilestat;
+lstat("symlink", &lfilestat);
+symlink will point to a specific file.
+
+You have a symbolic link that points to a folder.
+and the folder might be above the directory you are working in.
+Now you want to recurse, and find all of the .txt file,
+here is a folder, ill do a stat on it and get the metadata.
+
+Buffering:
+when we make an I/O library call like getc(), system call is made to the kernel.
+
+printf makes a system call to stdout (has its own buffer, and only when it is ready, it writes the contents to the buffer).
+
+Types of buffer
+Fully buffered
+	Data is stored in a buffer, flush when buffer is full
+Line Buffered
+	Flushes when a newline is encountered
+Unbuffered
+No buffering, data is sent/received immediately.
+
+

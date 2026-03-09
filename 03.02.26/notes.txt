@@ -1,0 +1,94 @@
+File I/O
+
+getopt (In C):
+int getopt(int argc, char* argv[], char *optstring);
+1. what are the flags?
+2. what are the optarg with each flag?
+
+variables in the getpot library:
+
+opterr = 0 disables getopt from printing errors to stderr. (does it by default)
+
+optopt: ascii value of the character of the argument.
+
+optind: index veriable that points to the next argument to processed, returns -1 when the getopt is succeeded and there arent any more arguments to parse.
+
+optarg: the argument being processed (points to the first argument)
+
+leading colon gives more flexibility to differentiate between missing optarg or an unknown flag.
+
+C will do all of the flags first and then do the shifting for you.
+
+getchar
+the simplest way to read one character from standard in
+
+putchar
+put one character onto the screen on stdout.
+
+EOF is a variable that is at the end of the stream
+
+scanf reads characters, interprets them and stores them to remaining arguments. (ignores blanks and tabs).
+it is often best to read in line at a time and then use scanf to pick it apart.
+
+sscanf
+reads a string instead of the stdin
+blanks or tabs are not ignored
+ordinary characters 
+conversion specifiers...
+
+line input
+fgets(char *line, int maxline, FILE *fp)
+reads the next input line including the newline. and reads at most maxline-1 characters.
+it will return line on the end of file or it will return NULL if error.
+IF you wanted to read 3 characters, you should have maxline as 5 so that it reads the newline character. (arg1,arg2,arg3,'\n','\0')
+You can also override the newline character with the null terminator so that it ends faster.
+
+File Pointers
+Open, read, write, append, close.
+File pointers are a wrapper that goes directly into a system kernel.
+
+Open a file: *fopen(char *name, char *mode);
+mode can be r, w, or a
+read write or append
+For some systems you can have binary files
+rb wb or ab will be the read binary write binary or append binary files
+
+int fclose(FILE *fp)
+
+fclose flushes the output buffer (meaning it empties the output)
+
+always pair your openings with closings.
+
+Reading from or writing to a file
+
+Single char: getc, putc (for files)
+Multiple Byte file: fread(), fwrite()
+File Position: fseek(), ftell(), etc.
+
+Everything in Linux is a file (or a descriptor)
+
+fread(void *p, size_t size, size_t n, FILE *file)
+reads n objects, each size bytes long, from file to p.
+returns the number of objects read.
+
+Uses feof or ferror to determine the status for each case
+
+fwrite(const void *p, size_t size, size_t n, FILE *file)
+writes to a file from p, n amount each time, and size much.
+
+fflush(FILE *stream)
+flushes the output buffer.
+
+stdout is line buffered (printf waits for \n)
+stderr is unbuffered (output is displayed immediately)
+
+Files are block buffered (contents being buffered will not appear until the internal buffer of a fixed size is filled up)
+
+Block bufferring can be turned off with:
+setbuf(FILE*,pointer)
+
+command: watch -n1 -d ls -l file
+
+strchr(array,character) (return a position that has the first time the character at the second argument is given)
+
+
