@@ -1,0 +1,28 @@
+Man pages:
+
+What does it mean when we see *restict in the man pages?
+
+Restrict means that parameters within a function must be distinct, or different.
+
+strdup(char* a, char*b) this allows for a and b to be the same
+strcpy(char *restrict a, char *restrict b) this forces a and b to be different.
+
+cd ../someDir/.. (Not a canonical path, it is not simplified).
+Canonical Path: simplified path (Real path will do the simplified path to any file)
+
+grep PATH ~ reveals any string that has PATH within a file '~'
+
+PATH_MAX is a constant
+
+Canonical forms of paths do not have a '/' at the end.
+
+NEXT HW INFO!!!:
+
+Take in some starting folder, traverse it and recurse it,
+figure out all of the files that have certain permission.
+
+If we come across a directory, we recurse inside it, loop over the directory.
+
+continue statting.
+
+

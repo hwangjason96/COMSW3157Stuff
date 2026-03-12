@@ -1,8 +1,8 @@
 CC = gcc
-TARGET = test_list
+TARGET = notesCode
 C_FILES = $(wildcard *.c)
 OBJS = $(patsubst %.c,%.o,$(C_FILES))
-CFLAGS = -g -Wall -pedantic-errors
+CFLAGS = -g -Wall -Werror -pedantic-errors
 LDFLAGS =
 LDLIBS =
 
