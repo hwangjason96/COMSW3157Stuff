@@ -1,0 +1,136 @@
+Notes
+
+
+A process is an instance of a running program
+a process ends when the main function returns.
+
+exit functions:
+return <status>; is equivalent to doing exit from anywhere in the program.
+System calls: they tell the kernel to immediately close all files and terminate the process, free anything.
+processes can have children, which are inherited by init or by the nearest subreaper process at exit.
+terminating children, and zombies, and orphans are talked about in Computer science.
+
+exit(int) is a C standard library function.
+You can register exit handlers using the C function atexit(), from stdlib.h
+exit(int) does the following:
+calls the exit handler (in reverse order)
+flushes and closes I/O streams
+exits and closes the program
+
+atexit(function): pushing my function to the top.
+then it gets pulled at exit in LIFO fashion.
+
+most of the time you want to use an exit handler globally.
+no param, no return.
+
+using like a global char** and freeing it is a good use for the exit handler.
+
+exit handlers would also work with a file I/O, closing it.
+
+the function exit, from stdlib.h will call of the exit handlers in the stack, and clean up the standard I/O.
+
+sytem exits: _exit, _Exit will not be used in the course.
+
+Command line and Environment Var
+int main (int argc, char** argv, char **envp)
+envp : HOME, PATH, SHELL, USER, ... , NULL.
+
+export, envp in the command line will give you the contents of envp.
+
+Process IDs
+Shell: sleep 5 -> this runs a program called sleep for 5 seconds
+shell does a fork, creates a copy of itself, and does an exec, which is to copy in over from the shell (the code), does an exec, finishes, brings you back to the prompt.
+
+You will have to write a childshell, run a bash processes.
+
+Process IDs
+Every process has a Unique PID (non negative int)
+PIDs are assigned by the kernel, the process ID continue to increment and goes back around when continually ran.
+
+ps (shows all of the PIDs)
+top (shows all of the process being run with CPU percentage)
+
+ps -aux: shows all of the processes for all users, users/owners, not attached to the terminal.
+
+pid_t getpid(void);
+returns the process ID of the calling (current) process
+pid_t getppid(void); gives you the parent of the pid
+
+pid_t fork();
+creates a child process
+the child is a (not so true) copy of the parent.
+It will bring in the value and modify the child
+both the parent and the child resume execution in the instruction following fork();
+A different value is returned in each case: 0 -> child, child PID -> to the parent process.
+Child waits for no one, so return value is usually 0.
+
+Properties inherited by the child:
+LOTS of things.
+All file descriptors that are open in the parent are duplicated in the child.
+
+differences between parent and child
+the return values from fork are different
+PID
+different parent process ID
+the child's tms_utime, tms_stime, tms_cutime, and tms,
+FIle locks set
+Pending alarms are cleared for child
+The set of pending signals for the child is the empty set.
+
+File Descriptors:
+parent process table entry: fd 0, fd 1, fd 2: fd flags and file pointer.
+All we are doing is duplicating the fact that these pointers are pointing to the same thing.
+
+fd_flags are modes of which some of the files are opened and how they might be opened.
+
+fork().
+pid = fork() < 0
+if fork fails, it returns a negative number
+
+if pid is 0, then I am in the child.
+if it doesn't, then we are in the parent.
+
+after fork, I make a copy of the entire code, now it has both the parent and the child running simultaneously.
+
+fork will then output something first, might be the parent or the child.
+it's either fork is deterministic or not.
+
+Thread vs. Process:
+Process:
+Spawning a separate process that doesn't have the parent's address base of a process.
+
+threads:
+schedulable units of execution within a process.
+All within the address base of a process.
+
+is it deterministic? if not, write all of the possible outputs.
+multiprocessing. sleep 1 would make it deterministic.
+
+stdout is block buffered. So the buffer never gets flushed.
+printf is line buffered, so it will flush every line.
+setlinebuf(stdout), sets the stdout to line buffered.
+Buffer is copied to the child as well.
+
+Waiting:
+have the parent always wait for the child
+pid_t wait(int *wstatus);
+
+wait will return the pid of the child that is terminated.
+wait suspends the parent until the child terminates.
+status gets updated after the child terminates,
+returns the pid.
+
+There are macros.
+
+waitpid(pid_t,int *status, int options)
+
+pid <-1 waits for any child process whose process gID is equal to the absolute value of pid
+
+forkwithfile.c
+Linux Signals
+
+kill -> send a signal, -9 
+kill -9 PID -> will kill a process with signal 9
+kill -2 PID -> will kill a process with signal 2
+
+Linux Signals will give the flags for kill.
