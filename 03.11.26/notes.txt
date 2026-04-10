@@ -25,4 +25,5 @@ If we come across a directory, we recurse inside it, loop over the directory.
 
 continue statting.
 
+Need to keep track of what filder im in.
 

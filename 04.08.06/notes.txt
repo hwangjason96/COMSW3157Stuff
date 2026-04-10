@@ -1,0 +1,89 @@
+Notes
+
+Signals: ctrl+c is a signal that interrupts the signal or sigint.
+sigint is one of many signals for the code we are running
+
+Signal: notification of an event that gains the attention of the operating system.
+
+Signal comes from: Hardware generated exceptions, OS/software-generated exceptons/ a process' explicit request using kill.
+os/software ex) alarm expires
+
+kill/killall command line utility
+
+shell command sigkill -> process
+sigwinch -> signal windowchange -> process
+terminal driver (sigint/sighup) -> process
+
+sigsegv
+sigusr1
+
+list of signal numbers.
+dump core: core memory -> dump the contents of memory to a file on disk, and figure out what happened.
+
+some that cannot be caught: sigkill, sigstop
+
+sigint/sigquit/sigkill/sigsegv/sigalarm/sigterm
+
+alarm: sets an alarm and sends a signal called sigalrm when it expires.
+
+int kill(pid_t,int sig)
+sends a specified signal to the specific process
+
+raise(sig) raise the signal and send the signal to the current running proc.
+you can send the kill to itself.
+
+When a signal is received.
+operating system immediately stops the program and sends it the relevant signal.
+-> signal handler -> returns back to the process for the next instruction.
+
+Some signals have impact on flags.
+
+Old way of handling signals:
+
+typedef void (*sighandler_t) (int);
+sets the handler when the signal 
+
+Signal handler: "I caught this signal"
+
+issues with signal(): does not block other signals
+signal() typically resets the default action to SIG_DFL
+This means that signal() handler must reinstall itself as its first action
+This is often undesirable
+
+int sigaction(int signum, const struct sigaction *act, struct sigaction *oldact)
+
+isgaction() changes the action taken by the process when receiving a specific signal
+signum can be any signal except sigkill, or sigstop.
+act is the new action to be taken and oldact returns the prev action.
+
+signal number, info about the signal, ucontext, siginfo (struct type with with lots of info)
+
+ucontext_t kernel-level stack info
+
+sa_sigaction:
+struct sigaction act = {0}; sets everything to 0.
+act.sa_sigaction = handle; ->setting the sigaction function has handle
+act_sa_flags = SA_SIGINFO -> dont default to the handler and use handle.
+
+EINTR is returned as an error, if read() and write() are interrupted by a signal that is delivered during its execution.
+
+SA_RESTART is passed in sa_flags, certain systems calls will be restarted. (But this can be dangerous)
+
+Reentrant function: can be safely interrupted and restarted without causing unexpected behavior.
+it cannot use any shared resources. 
+only on data provided by the caller.
+it must call only other reentrant functions.
+
+$$ gives you the received signal.
+
+volatile sig_atomic_t signal_val = 0;
+
+signal handler -- keep it simple!!!
+
+killall don't put ./ for the process name.
+
+closing the input closes the process as well.
+
+HW
+prints a prompt, do most of the bash script
+

@@ -1,0 +1,33 @@
+notes:
+
+after forking, the child process shouldn't just continue.
+execlp("cat", "cat", "/dev/urandom", (char *)0) == -1) {
+	fprintf(stderr, "Error:...");
+	return EXIT_FAILURE;
+}
+
+Zombies:
+processes that do not completely disappear until their parent waits for them.
+if the child finishes, but the parent hasn't waited for them, then there is a zombie.
+
+ps -aux: shows if a process is a zombie by showing Z+
+
+Orphans:
+child process where the parent process has terminated or exited before the child process.
+OS must assign new parent to the child.
+Windowing manager for the shell assumes the parent.
+worst case: init becomes a parent
+
+ps -aux: shows that the PID is way above the child process.
+
+exec() Family of Functions
+-> replaces the current process image with a new process image.
+-> the process retains its PID and relationship to the parent, but the memory address space is replaced by that of the new executable, and the new program begins executing the main().
+
+execlp - searches for executable in PATH environment
+execvp(),execvpe().
+
+execl and execv, execvp, execlp are most commonly used.
+
+Fork Practice.
+
