@@ -1,0 +1,86 @@
+Notes:
+
+Networking (not the people thing, but the computer thing):
+
+What are somethings about networking?
+
+int bind( int sockfd, const struct sockaddr *addr, socklen_t addrlen);
+assigning a name to a socket
+
+htonl: host to network (datatype: long)
+
+let's say your computer has multiple IP addresses assigned to it, we need to listen to any, or all signals coming to it, we need to do htonl
+Assigning an IP Address to the socket.
+
+Need to be done on the server side.
+We are telling the client to connect to the two entities, IP and the port on the server.
+
+Port numbers are often greater than 1024.
+
+Binding a socket:
+
+Internet address: structk in_addr { uint32_t s_addr;};
+
+Byte Ordering: ties in a lot of the stuff from earlier
+Conversion from Little Endian -> Big endian
+
+Little endian ("little end"). least significant byte is stored at the lowest memory address
+With big-endian having the least significant byte stored at the highest memory address.
+
+int a = 10;
+[0000 0000 0000 0000 0000 1010]
+Addr:
+1003 1002 1001 1000
+
+How to check little endian or big endian?
+
+cast the int to a character, which only grabs the least significant bytes.
+if it is equal to the intended value, it is little endian
+if it is not, it is big endian.
+
+Exam: questions related to endian-ness.
+
+Bad integers to check: -1 or 0
+
+When doing big to little endian conversion, ONLY change the order of the bytes, not the entirety of the bits.
+
+int main(){
+int x = 1;
+char *cp = (char *) &x;
+...
+
+
+host is little endian in linux systems
+hton -> host to network.
+uint32_t (unsigned int 32 bits) (makes sure the system reads the parameter as a 32 bit)
+
+listen()
+int listen(int sockfd, int backlog)
+
+Server cannot handle all the requests at once.
+listen makrs the socket referred to by sockfd as a passive socket.
+
+backlog is the maximum lenght of queue of pending connections
+
+accept
+it will wait for a connection request to come through.
+You cannot send data to a server with a TCP.
+
+Ephemeral: short lived. their port is short lived.
+
+Client needs the port because they need to hear the connection back. (for endpoints)
+
+Client doesn't always need to send:
+You are writing an application and you send a welcoming message and may be that means that the clien t is waiting.
+
+send() (same as write except send has flags)
+
+recv() (Same as read, except is has flags)
+blocking (Waits for data)
+
+close (fd) //same as 
+
+accept and recv are both blocking.
+Accept gets the addr, but the read doesn't have any data received, the server does nothing.
+
+

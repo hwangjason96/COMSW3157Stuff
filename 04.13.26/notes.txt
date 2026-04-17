@@ -1,0 +1,174 @@
+Notes:
+
+Signals: to interrupt a process, or communicate with a process asynchroniously.
+It's time to kick people out of the server who might be logged on for a long period of time...?
+
+Networking:
+
+
+Practice Quiz Questions:
+SIGINT 2, SIGQUIT 3, SIIGKILL 9, SIGALARM 14, SIGTERM 15
+0 out all of the sa struct to 0
+handler = handler
+sigkill will return -1. (it fails but there aren't any error messages and it doesn't do anything)
+sleep 5 seconds
+print 3 and flush
+
+
+handler
+if signum == sigint
+print 1, flush
+kill pid() sigkill
+if not
+print 2 and flush
+
+My answer: 321
+The answer: 3 (sleeping for 5 seconds and none of the signal goes through, the only thing happens is 3.)
+
+one second in cntrl+c -> SIGINT.
+print 1, then kills the process
+ans: 1
+
+B:
+sigemptyset(&sa.ssa_mask) -> set the mask to empty
+sigaddset(&sa.sa_mask, SIGINT) -> SIGINT is masked (or blocked)
+sigaction(SIGQUIT,...) -> captures sigquit
+
+ans: 23
+
+ans: instantaneously or 0 seconds
+
+C -> after 1 seconds kill -15 pid
+ans: NOTHING
+
+singfun.c
+
+If there are multiple copies, it sends the first one, then blocks the second one coming in because if it is the same, then processes the second one, and then have the third one pass through...?
+
+
+Networking:
+Protocols: when one person speaks, everyone should be listening, (social protocols)
+
+Different protocols are built with different situations.
+
+Service vs protocol
+Service: vertical, protocol: horizontoal
+
+Service goes from a layer to a layer above.
+
+Providing a service to the next person in the assembly line.
+
+Protocol is not going up or down the chain, it is about entities left or right of the person doing the job. Communication on the same layer at different end points.
+
+ISO: INternational Standards Organization
+OSI Open systems interconnection:
+OSI has 7 layers
+Layer should be created where a different abstraction is needed.
+Each layer should perform a well-defined function
+The function of each layer should be chosen with an eye toward defining internationally standardized protocols.
+
+Application
+|
+Presentationt
+|
+Session
+|
+Transport
+|
+Network
+|
+Data Link
+|
+Physical
+
+TCP/IP:
+Transmission COntrol Protocol/Internet Protocol
+Series of tools that works on different layers.
+HTTP/DNS, relies ont TCP/IP.
+Google.com -> IP Address.
+
+Link Layer:
+Working from the bottom up.
+
+Internet Layer:
+Routing, how do I get the packets to the right place on the network?
+
+Transport Layer:
+TCP (connection oriented), transmitting and retransmitting if possible,
+UDP simple, just send the packets and nothing else to worry about.
+Getting the data sent out properly.
+
+Application Layer:
+Ex) send a string from one place to another:
+do I null terminate it? do I place the string at the beginning?
+the designer decides this at the application layer
+
+Presentation is ommitted from TCP/IP:
+Data you wish to send -> transport layer, user data gets prepended and encapsulated by the application header.
+transport layer puts TCP header in front of it.
+(EACH layer adds a header)
+
+Sockets:
+communication channels like a telephone.
+Communication between two end points. I want my chat server to handle multiple clinets all over the place, so we need Internet sockets.
+
+Sockets are id'd by socket descriptors, implemented with file descriptors in unix.
+Open a networking socket, use read and write if I wanted to.
+After you make a socket, you establish connection using a port.
+
+socket is a function: socket (int domain, int type, int protocol)
+
+domain: address family
+type: communication, connection semantics
+protocol: sepcific protocol (usually 0)
+
+AF_INEt is the only address family we are worried about
+
+UDP:
+postal mail. Single socket to receive messages, like a single mailbox that receives letters.
+No guarantee of delivery, unreliable.
+
+Independent packets: we have all the friends around the world,
+someone in Korea, australia, north pole sends you a mail,
+you will receive them in different days, and in a different order.
+
+must put address in each packets.
+
+socket(AF_INET, SOCK_DGRAM, 0)
+
+TCP:
+phone
+reliable, guaranteed delivery
+in order delivery, three people calling you in different orders will always receive calls in that order.
+
+connection-oriented single socket per connection.
+setup connection ollowed by data transfer.
+socket(AF_INET, SOCK_SCONNECT(?), 0)
+
+Socket ID: IP Address + Port Number.
+
+Receiving host: has a unique ID.
+IP address is a 32 bit quantity for IPv4
+
+REceiving socket:
+host may be using many different processes
+Destination port that uniquely dentifies the socket.
+a port number is a 16 bit quantity.
+
+Using Ports:
+
+CLinet server communication:
+As time goes on, we go down the diagram..
+
+UDP:
+Socket to bind (assign address and prot to socket)
+bind to recv() (waits for data)
+
+Client creates the socket and send()
+
+after recv, it sends back to the client.
+and recv more or go down to send
+after client recv, it closes or go back and send more.
+
+TCP is similar but with a bit more complexity
+
